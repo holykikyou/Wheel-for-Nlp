@@ -49,6 +49,10 @@ def get_center(group_k):
     """中心评估函数,获取一个簇的中心点"""
     pass
 
+def compute_distance(x,y):
+    """自定义向量距离函数"""
+    pass
+
 def predict(x_test,cluster_centers):
     """使用获得的cluster_centers即聚类中心结果计算和测试数据的距离"""
     pass

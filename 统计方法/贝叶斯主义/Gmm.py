@@ -26,6 +26,7 @@ def gaussian_fun(x:np.array,u:np.array,sigma):
    right_term=np.exp(-0.5*np.dot(np.transpose(x-u),np.linalg.inv(sigma),x-u))  #点积
    return left_term*right_term
 
+
 def gmmcluster(x,k,epoch_num):
     random_labels=np.random.randint(0,k,x.shape[0])   #这里是取0到k之间值随机生成x.shape[0]个数的列表，和kmeans不完全一样
     assert set(random_labels)==k
@@ -38,6 +39,7 @@ def gmmcluster(x,k,epoch_num):
         sigma_i=np.cov(np.transpose(xi))  #计算第i类聚类的协方差矩阵，转置后每行都是一个Rir
         u.append(ui)
         sigma.append(sigma_i) #保存到各类的特征均值和协方差矩阵列表
+
     for e in range(epoch_num):
         new_u=[]
         new_sigma=[]
@@ -46,11 +48,9 @@ def gmmcluster(x,k,epoch_num):
             new_ui=0
             new_sigma_i=np.zeros([x.shape[1],x.shape[1]])   #初始化新协方差矩阵
             for j in range(x.shape[0]):
-
                 pj = 0
                 for s in range(k):  # 第三重循环是为了计算概率和
                     pj += gaussian_fun(x[j], u[s], sigma[s])  # 属于各类的概率和
-
                 pij = gaussian_fun(x[j], u[i], sigma[i]) / pj   #数据j属于i类的概率
                 ni+=pij #
                 new_ui+=pij*x[j]   #相当于求期望，np.mean相当于pij==1/n
@@ -81,18 +81,7 @@ def show_cluster_ans(x,k,u,sigma):
 
     pass
 
-
-
-
-
-
-
-
-
-
-
-
-
+"""numpy函数测试"""
 
 def np_cov_test():
     a=np.arange(8).reshape(2,4)
